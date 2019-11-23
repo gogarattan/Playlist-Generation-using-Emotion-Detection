@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<title>Minor Project</title>
+
+	<!-- Materialize -->
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+			 
+	<!-- Jqury -->
+	<script src="https://code.jquery.com/jquery-3.4.1.js"></script>
+</head>
+<body>
+	
+
+	<div class="container">
+	
+		<h1 class="center">
+			<strong>Playlist Generation</strong>
+		</h1>
+
+		<div class="row">
+			<div class="col s12 m12 l7">
+
+				<iframe 
+					id='youtubeVideo' 
+					width="560" 
+					height="315" 
+					src="https://www.youtube.com/embed/LBr7bFvD6ZY?rel=0" 
+					frameborder="0" 
+					allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" 
+					allowfullscreen>
+				</iframe>
+
+			</div>
+			<div class="col s12 m12 l5">
+
+				<ul id='songList'>
+				</ul>
+
+			</div>
+		</div>
+		
+	</div>
+
+	
+	<script>
+		
+		$.ajax({
+			url: 'http://localhost:5000/api',
+			type: 'GET',
+			success: function (res, status) {
+				if (res['success'] === true) {
+					console.log(res['data']);
+				}
+
+				let x = '';
+				for(let i in res['data']) {
+					
+					let oneButton = '<li><button class="songIdPlay" onclick="clicked(\'' + res['data'][i]['id'] + '\')">' + res['data'][i]['title'] + '</button></li>';
+					
+					console.log(oneButton);
+						x += oneButton;
+				}
+
+				document.getElementById('songList').innerHTML = x;
+			},
+			error: function (err) {
+				console.log(err);
+			}
+		})
+
+
+		function clicked(id) {
+
+			// console.log('click', id);
+			let vid = document.getElementById('youtubeVideo');
+
+			vid.setAttribute('src', `https://www.youtube.com/embed/${id}?rel=0`)	
+		}
+		
+	</script>
+
+
+</body>
+</html>

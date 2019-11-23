@@ -1,0 +1,11 @@
+{
+  "name": "",
+  "version": "",
+  "dependencies": {
+    "express": "^4.17.1",
+    "googleapis": "^45.0.0",
+    "request": "^2.88.0",
+    "request-promise": "^4.2.5",
+    "youtube-search": "^1.1.4"
+  }
+}
