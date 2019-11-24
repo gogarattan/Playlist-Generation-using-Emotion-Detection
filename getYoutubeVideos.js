@@ -1,4 +1,5 @@
 var search = require('youtube-search');
+let config = require('./config');
 
 //AIzaSyCMKEg03LntrfSCOKjaxO_W0LF7-FcoqtM
 
@@ -39,12 +40,31 @@ function getVideo(trackArray){
 
     return new Promise((resolve22, reject22) => {
 
+        if(config.saveYoutubeRequest) {
+            
+            let fakeData = [ 
+                { 
+                    id: 'uDLgA_YFuuA',
+                    title: 'Mark Medlock - Maria Maria (Videoclip)' 
+                }, { 
+                    id: 'QOowQeKyNkQ',
+                    title: 'Chris Brown - Don&#39;t Wake Me Up (Official Music Video)' 
+                }, {
+                    id: 'BSOhuXgkWcE',
+                    title: 'bomb bae'
+                }
+            ];
+
+            resolve22(fakeData);
+            return;
+        }
+
         let result = []
         let promises = []
         for(let i in trackArray) {
 
             // TODO Remove
-            if(i == 2) {
+            if(i == config.countYoutubeRequest) {
                 break;
             }
 
@@ -59,21 +79,6 @@ function getVideo(trackArray){
 
         Promise.all(promises)
         .then(() => {
-
-            // let fakeData = [ 
-            //     { 
-            //         id: 'uDLgA_YFuuA',
-            //         title: 'Mark Medlock - Maria Maria (Videoclip)' 
-            //     }, { 
-            //         id: 'QOowQeKyNkQ',
-            //         title: 'Chris Brown - Don&#39;t Wake Me Up (Official Music Video)' 
-            //     }, {
-            //         id: 'BSOhuXgkWcE',
-            //         title: 'bomb bae'
-            //     }
-            // ];
-
-            // resolve22(fakeData);
 
             resolve22(result)
         }).catch((err) => {

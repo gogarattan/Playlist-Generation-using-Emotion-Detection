@@ -18,7 +18,7 @@ function getEmotion() {
         
         // Enter your mood here
         if(config.camera === false) {
-            resolve('Neutral');
+            resolve(config.cameraOffMood);
             return;
         }
 
