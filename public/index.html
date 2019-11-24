@@ -12,37 +12,93 @@
 			 
 	<!-- Jqury -->
 	<script src="https://code.jquery.com/jquery-3.4.1.js"></script>
+
+
+	<style>
+		
+		.iframe-container {
+			position: relative;
+			width: 100%;
+			padding-bottom: 56.25%; 
+			height: 0;
+		}
+		.iframe-container iframe {
+			position: absolute;
+			top:0;
+			left: 0;
+			width: 100%;
+			height: 100%;
+		}
+
+	</style>
+
+
 </head>
+
+
 <body>
 	
 
 	<div class="container">
 	
 		<h1 class="center">
-			<strong>Playlist Generation</strong>
+			<strong>Playlist Generation by Emotion</strong>
 		</h1>
 
-		<div class="row">
-			<div class="col s12 m12 l7">
+		<div class="row center" id="loader">
+			</h1>Please Wait for Playlist Generation</h1>
+		</div>
 
-				<iframe 
-					id='youtubeVideo' 
-					width="560" 
-					height="315" 
-					src="https://www.youtube.com/embed/LBr7bFvD6ZY?rel=0" 
-					frameborder="0" 
-					allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" 
-					allowfullscreen>
-				</iframe>
+		<div class="row hide" id="playlist">
+			<div class="col s12 m12 l12">
+
+
+				<div class="iframe-container">
+					<iframe 
+						id='youtubeVideo' 
+						width="560" 
+						height="315" 
+						src="" 
+						frameborder="0" 
+						allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" 
+						allowfullscreen>
+					</iframe>
+				</div>
 
 			</div>
-			<div class="col s12 m12 l5">
+			<div class="col s12 m12 l12">
 
 				<ul id='songList'>
 				</ul>
 
 			</div>
 		</div>
+
+		<p className='devText'>Developed by &#9829; by Group 19</p>
+
+		<style>
+		
+			.devText {
+				color: white;
+				font-size: 13px;
+				position: fixed;
+				bottom: 1%;
+				right: 4%;
+				float: right;
+			}
+
+			@media only screen and (max-width: 800px) {
+				p.devText {
+					font-size: 10px;
+				}
+			}
+			@media only screen and (max-width: 800px) {
+				p.devText {
+					font-size: 10px;
+				}
+			}
+
+		</style>
 		
 	</div>
 
@@ -60,13 +116,25 @@
 				let x = '';
 				for(let i in res['data']) {
 					
-					let oneButton = '<li><button class="songIdPlay" onclick="clicked(\'' + res['data'][i]['id'] + '\')">' + res['data'][i]['title'] + '</button></li>';
+
+
+					// <button class="btn waves-effect waves-light" type="submit" name="action">Submit
+					// 	<i class="material-icons right">send</i>
+					// </button>
+
+
+					let oneButton = '<li><button class="btn waves-effect waves-light songIdPlay" onclick="clicked(\'' + res['data'][i]['id'] + '\')">' + res['data'][i]['title'] + '</button></li><br>';
 					
 					console.log(oneButton);
 						x += oneButton;
 				}
 
 				document.getElementById('songList').innerHTML = x;
+
+				document.getElementById('youtubeVideo').setAttribute('src', `https://www.youtube.com/embed/${res['data'][0]['id']}?rel=0`);
+
+				$('#playlist').removeClass('hide');
+				$('#loader').addClass('hide');
 			},
 			error: function (err) {
 				console.log(err);
